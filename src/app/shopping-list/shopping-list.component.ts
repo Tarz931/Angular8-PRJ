@@ -17,7 +17,7 @@ export class ShoppingListComponent implements OnInit {
   constructor(private slService: ShoppingListService) {}
 
   ngOnInit() {
-    this.ingredients = this.slService.getIngredient();
+    this.ingredients = this.slService.getIngredients();
     this.slService.ingredientsChanged.subscribe((ingredient: Ingredient[]) => {this.ingredients = ingredient}); // This is so that the slice data can be updated
   }
 
@@ -26,6 +26,10 @@ export class ShoppingListComponent implements OnInit {
     // const ing = new Ingredient(item.name, item.value);
     // this.ingredients.push(item)
     // this.slService.ingredientAdd.subscribe((item: Ingredient) => {this.slService.addIngredient(item)});
+  }
+
+  onEditItem(index: number){
+    this.slService.startedEditing.next(index);
   }
 
 
