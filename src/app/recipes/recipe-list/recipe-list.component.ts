@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Recipe } from '../recipe.model'
 import { RecipeService } from '../recipe.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,8 +11,9 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./recipe-list.component.css'],
   // providers: [RecipeService] 
 })
-export class RecipeListComponent implements OnInit {
+export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[];
+  sub: Subscription;
   // recipes: Recipe[] = [
   //   new Recipe('A Test Recipe', 'This is a test', 'http://www.boulingrin.fr/wp-content/uploads/2013/12/url.jpg'),
   //   new Recipe('A Test Recipe22', 'This is a test', 'http://www.boulingrin.fr/wp-content/uploads/2013/12/url.jpg')
@@ -22,7 +24,7 @@ export class RecipeListComponent implements OnInit {
   constructor(private recipeService: RecipeService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.recipeService.recipesChanged.subscribe(
+    this.sub = this.recipeService.recipesChanged.subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes;
       }
@@ -33,7 +35,11 @@ export class RecipeListComponent implements OnInit {
   onNewRecipe(){
     // this.route.navigate(['/recipes/new']);
     this.router.navigate(['new'], {relativeTo: this.route})
-  } 
+  }
+
+  ngOnDestroy(){
+    this.sub.unsubscribe();  }
+
 
   // onRecipeSelected(recipe: Recipe){
   //   this.recipeWasSelected.emit(recipe);

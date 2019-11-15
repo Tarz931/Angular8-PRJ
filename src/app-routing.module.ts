@@ -13,16 +13,15 @@ const appRoutes: Routes = [
         {path: 'new', component: RecipeEditComponent},
         {path: ':id', component: RecipeDetailComponent},
         {path: ':id/edit', component: RecipeEditComponent},
-
     ]},
     {path: 'shopping-list', component: ShoppingListComponent}
-    
-]
+
+];
 
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
+    imports: [RouterModule.forRoot(appRoutes, {useHash: true})],
     exports: [RouterModule]
 })
-export class AppRoutingModule{
+export class AppRoutingModule {
 
 }

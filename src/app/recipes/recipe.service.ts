@@ -12,12 +12,15 @@ export class RecipeService {
 
     recipeSelected =  new EventEmitter<Recipe>();
     // recipeSelected = new EventEmitter();
-    private recipes: Recipe[] = [
-        new Recipe('Steak', 'How to Make a Steak', 'http://www.boulingrin.fr/wp-content/uploads/2013/12/url.jpg', 
-                    [new Ingredient('NY Cut', 1), new Ingredient('Pepper', 2)]),
-        new Recipe('Burger', 'How to make a Burger', 'http://pngimg.com/uploads/burger_sandwich/burger_sandwich_PNG4160.png',
-        [new Ingredient('Chicken', 1), new Ingredient('lettuce', 2), new Ingredient('Tomato', 2), new Ingredient('Buns', 2)])
-      ];
+    // private recipes: Recipe[] = [
+    //     new Recipe('Steak', 'How to Make a Steak', 'http://www.boulingrin.fr/wp-content/uploads/2013/12/url.jpg', 
+    //                 [new Ingredient('NY Cut', 1), new Ingredient('Pepper', 2)]),
+    //     new Recipe('Burger', 'How to make a Burger', 'http://pngimg.com/uploads/burger_sandwich/burger_sandwich_PNG4160.png',
+    //     [new Ingredient('Chicken', 1), new Ingredient('lettuce', 2), new Ingredient('Tomato', 2), new Ingredient('Buns', 2)])
+    //   ];
+
+
+    private recipes: Recipe[];
 
       getRecipes(){
           return this.recipes.slice();
@@ -43,6 +46,11 @@ export class RecipeService {
 
       deleteRecipe(index: number){
         this.recipes.splice(index, 1);
+        this.recipesChanged.next(this.recipes.slice());
+      }
+
+      setRecipes(recipes: Recipe[]){
+        this.recipes = recipes;
         this.recipesChanged.next(this.recipes.slice());
       }
 }
